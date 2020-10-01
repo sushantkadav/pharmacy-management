@@ -16,10 +16,11 @@ import java.util.UUID;
 public class User {
     @Id
     @GeneratedValue
-    private UUID id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String userName;
     private String password;
     private String mobileNo;
+    private Boolean isActive = true;
 }
