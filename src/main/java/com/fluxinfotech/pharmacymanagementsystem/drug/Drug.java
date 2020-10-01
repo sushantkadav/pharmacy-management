@@ -1,6 +1,7 @@
 package com.fluxinfotech.pharmacymanagementsystem.drug;
 
 
+import com.fluxinfotech.pharmacymanagementsystem.common.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Drug {
+public class Drug extends Auditable<Long> {
 
     @Id
     @GeneratedValue

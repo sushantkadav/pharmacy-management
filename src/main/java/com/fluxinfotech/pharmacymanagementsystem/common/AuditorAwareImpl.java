@@ -4,9 +4,9 @@ import org.springframework.data.domain.AuditorAware;
 
 import java.util.Optional;
 
-public class AuditorAwareImpl implements AuditorAware<String> {
+public class AuditorAwareImpl implements AuditorAware<Long> {
     @Override
-    public Optional<String> getCurrentAuditor() {
-        return Optional.of("admin");
+    public Optional<Long> getCurrentAuditor() {
+        return Optional.of(101L);
     }
 }
