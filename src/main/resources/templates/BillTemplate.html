@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <!--    <meta charset="UTF-8">-->
+    <title>BillTemplate</title>
+    <!--   <link href="https://fonts.googleapis.com/css?family=Times New Roman&display=swap" rel="stylesheet"/>-->
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+            }
+        }
+
+        @page {
+            margin: 2mm 2mm 12mm 2mm;
+            size: A4 portrait;
+            margin-bottom: 8mm;
+        }
+
+        @page {
+            @bottom-right {
+                font-size: 13px;
+                background-color: darkgray;
+                content: "Page " counter(page) " of " counter(pages);
+                padding: 4pt 4pt;
+            }
+        }
+
+        .new-page-break {
+            page-break-before: always;
+        }
+
+        .blue {
+            background-color: #12529a;
+            color: #fff;
+        }
+
+        .bluel {
+            background-color: #cce6ff;
+        }
+
+        .orange {
+            background-color: #f1592a;
+            color: #fff;
+        }
+
+        .orangec {
+            color: #f1592a;
+        }
+
+        .dynamic-color:nth-child(even) {
+            background-color: #cce6ff;
+        }
+
+        .page-break {
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+
+<body>
+
+<div>
+
+    <table style="border-collapse: collapse;width: 100%;">
+        <tr class="orange">
+            <td style="margin: 0; padding: 0">
+                <h3 style="font-weight: 500; text-transform: uppercase;display: block; overflow: hidden; text-align: center">Medical Invoice</h3>
+            </td>
+        </tr>
+    </table>
+    <br/>
+
+    <table style="border-collapse: collapse;width: 70%; margin: 0px auto; border-bottom: 2px solid #f1592a;">
+
+        <tr class="bluel">
+
+            <td style="font-weight: 400;font-size: 12px;padding: 4px 6px; width: 20%;"><b>Invoice No</b></td>
+            <td>:</td>
+            <td style="font-weight: 400;font-size: 12px;padding: 4px 6px; text-align: center">
+                <span th:text="${billData.billNo}"></span></td>
+        </tr>
+        <tr>
+
+            <td style="font-weight: 400;font-size: 12px;padding: 4px 6px; width: 20%;"><b>Date</b></td>
+            <td>:</td>
+            <td style="font-weight: 400;font-size: 12px;padding: 4px 6px;text-transform: capitalize; text-align: center">
+                <span th:text="${billData.date}"></span>
+            </td>
+        </tr>
+        <tr class="bluel">
+
+            <td style="font-weight: 400;font-size: 12px;padding: 4px 6px; width: 20%;"><b>Patient Name</b></td>
+            <td>:</td>
+            <td style="font-weight: 400;font-size: 12px;padding: 4px 6px;text-transform: capitalize; text-align: center">
+                <span th:text="${billData.patientName}"></span>
+            </td>
+        </tr>
+        <tr>
+
+            <td style="font-weight: 400;font-size: 12px;padding: 4px 6px; width: 20%;"><b>Patient Contact No</b></td>
+            <td>:</td>
+            <td style="font-weight: 400;font-size: 12px;padding: 4px 6px;text-transform: capitalize; text-align: center">
+                <span th:text="${billData.patientContactNo}"></span>
+            </td>
+        </tr>
+        <tr class="bluel">
+            <td style="font-weight: 400;font-size: 12px;padding: 4px 6px; width: 20%;"><b>Doctor Name</b></td>
+            <td>:</td>
+            <td style="font-weight: 400;font-size: 12px;padding: 4px 6px;text-transform: capitalize; text-align: center">
+                <span th:text="${billData.doctorName}"></span>
+            </td>
+        </tr>
+
+    </table>
+
+</div>
+<br/>
+
+<table style="border-collapse: collapse;width: 100%;">
+    <tr class="blue">
+        <td style="font-weight: bold;font-size: 13px;padding: 4px 6px;">Sr. No.</td>
+        <td style="font-weight: bold;font-size: 13px;padding: 4px 6px;">Particulars</td>
+        <td style="font-weight: bold;font-size: 13px;padding: 4px 6px;">Rate</td>
+        <td style="font-weight: bold;font-size: 13px;padding: 4px 6px;">Quantity</td>
+        <td style="font-weight: bold;font-size: 13px;padding: 4px 6px;">Total</td>
+    </tr>
+    <tr th:each="item :${billData.drugDetailDTOList}" class="dynamic-color">
+        <td style="font-weight: 400;font-size: 12px;padding: 4px 6px;"><span th:text="${item.id}"></span></td>
+        <td style="font-weight: 400;font-size: 12px;padding: 4px 6px;"><span th:text="${item.drugName}"></span></td>
+        <td style="font-weight: 400;font-size: 12px;padding: 4px 6px;"><span th:text="${item.drugRate}"></span></td>
+        <td style="font-weight: 400;font-size: 12px;padding: 4px 6px;"><span th:text="${item.drugQuantity}"></span></td>
+        <td style="font-weight: 400;font-size: 12px;padding: 4px 6px;"><span th:text="${item.amount}"></span></td>
+
+    </tr>
+    <tr class="orange">
+        <td style="font-weight: 400;font-size: 12px;padding: 4px 6px;">&nbsp;</td>
+        <td style="font-weight: 400;font-size: 12px;padding: 4px 6px;">&nbsp;</td>
+        <td style="font-weight: bold;font-size: 13px;padding: 4px 6px;text-align: right;padding-right: 20px;">
+            <b>TAX %</b></td>
+        <td style="font-weight: bold;font-size: 13px;padding: 4px 6px;text-align: right;padding-right: 20px;"><b><span
+                th:text="${billData.tax}"></span></b></td>
+        <td style="font-weight: 400;font-size: 12px;padding: 4px 6px;">&nbsp;</td>
+
+    </tr>
+
+    <tr class="orange">
+        <td style="font-weight: 400;font-size: 12px;padding: 4px 6px;">&nbsp;</td>
+        <td style="font-weight: 400;font-size: 12px;padding: 4px 6px;">&nbsp;</td>
+        <td style="font-weight: bold;font-size: 13px;padding: 4px 6px;text-align: right;padding-right: 20px;">
+            <b>Discount %</b></td>
+        <td style="font-weight: bold;font-size: 13px;padding: 4px 6px;text-align: right;padding-right: 20px;"><b><span
+                th:text="${billData.discount}"></span></b></td>
+        <td style="font-weight: 400;font-size: 12px;padding: 4px 6px;">&nbsp;</td>
+
+    </tr>
+
+    <tr class="orange">
+        <td style="font-weight: 400;font-size: 12px;padding: 4px 6px;">&nbsp;</td>
+        <td style="font-weight: 400;font-size: 12px;padding: 4px 6px;">&nbsp;</td>
+        <td style="font-weight: bold;font-size: 13px;padding: 4px 6px;text-align: right;padding-right: 20px;">
+            <b>Total</b></td>
+        <td style="font-weight: bold;font-size: 13px;padding: 4px 6px;text-align: right;padding-right: 20px;"><b><span
+                th:text="${billData.totalAmount}"></span></b></td>
+        <td style="font-weight: 400;font-size: 12px;padding: 4px 6px;">&nbsp;</td>
+
+    </tr>
+
+</table>
+
+</body>
+</html>

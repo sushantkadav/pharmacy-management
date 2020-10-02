@@ -1,5 +1,6 @@
 package com.fluxinfotech.pharmacymanagementsystem.user;
 
+import com.fluxinfotech.pharmacymanagementsystem.common.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class User {
+public class User extends Auditable<Long> {
     @Id
     @GeneratedValue
     private Long id;

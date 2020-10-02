@@ -5,8 +5,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class DrugService {
@@ -67,5 +73,15 @@ public class DrugService {
         drugRepository.deleteById(id);
         return true;
     }
+
+    public Map<Long, String> getDrugIdNameMap(Set<Long> drugIds) {
+        if (CollectionUtils.isEmpty(drugIds)) return Collections.emptyMap();
+        List<Drug> drugList = drugRepository.findAllByIdIn(drugIds);
+        Map<Long, String> drugIdNameMap = new HashMap<>();
+
+        drugList.forEach(drug -> drugIdNameMap.put(drug.getId(),drug.getDrugName()));
+        return drugIdNameMap;
+    }
+
 
 }
